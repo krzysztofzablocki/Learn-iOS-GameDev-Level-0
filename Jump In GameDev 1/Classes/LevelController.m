@@ -85,15 +85,11 @@ static NSUInteger currentLevel = 1;
 {
   [_space step:(cpFloat)link.duration * link.frameInterval];
 
-  [CATransaction begin];
-  [CATransaction setDisableActions:YES];
-
   for (id view in self.view.subviews) {
     if ([view respondsToSelector:@selector(update)]) {
       [view update];
     }
   }
-  [CATransaction commit];
 }
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
