@@ -129,14 +129,18 @@ static NSUInteger currentLevel = 1;
 
 - (void)loadLevel:(NSUInteger)level
 {
-  UIViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:[NSString stringWithFormat:@"Level%d", level]];
-  //! looping
-  if (!controller) {
-    level = 1;
-    UIViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:[NSString stringWithFormat:@"Level%d", level]];
-  }
-  [self.navigationController setViewControllers:@[controller] animated:YES];
-  currentLevel = level;
+    UIViewController *controller = nil;
+    @try {
+        controller= [self.storyboard instantiateViewControllerWithIdentifier:[NSString stringWithFormat:@"Level%d",level]];
+    }
+    @catch (NSException *exception) {
+        level = 1;
+        controller = [self.storyboard instantiateViewControllerWithIdentifier:[NSString stringWithFormat:@"Level%d",level]];
+    }
+    @finally {
+        [self.navigationController setViewControllers:@[controller] animated:YES];
+        currentLevel = level;
+    }
 }
 
 @end
